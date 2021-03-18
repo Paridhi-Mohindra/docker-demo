@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+  backend:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: mysecretpassword
+      DB_DATABASE: temp
+      DB_HOST: postgresql
+      DB_PORT: 5432
+    ports:
+      - '8000:3000'
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres
+    volumes:
+      - ../database:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
